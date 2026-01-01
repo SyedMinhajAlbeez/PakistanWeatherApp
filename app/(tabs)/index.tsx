@@ -4,7 +4,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
-import store from './src/store';
+import store from '../src/store';
 import AppNavigator from './src/navigation/AppNavigator';
 import theme from './src/theme';
 import { registerForPushNotificationsAsync } from './src/services/notificationService';
