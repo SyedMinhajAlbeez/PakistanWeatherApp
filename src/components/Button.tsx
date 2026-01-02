@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button as PaperButton } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
+import { Button as PaperButton } from 'react-native-paper';
 
 interface ButtonProps {
   mode?: 'text' | 'outlined' | 'contained';
   onPress: () => void;
-  children: string;
+  children: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
   icon?: string;

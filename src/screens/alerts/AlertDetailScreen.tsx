@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Share, Alert } from 'react-native';
-import { Text, Card, Chip, Button as PaperButton } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import MapView, { Marker } from 'react-native-maps';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Alert, ScrollView, Share, StyleSheet, View } from 'react-native';
+import { Card, Chip, Text } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import MapView, { Marker } from '../../../src/components/PlatformMapView';
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import Button from '../../components/Button';
-import { fetchAlertById, deleteAlert } from '../../store/alertSlice';
-import { RootState, AppDispatch } from '../../store';
-import { getSeverityColor, formatDate } from '../../utils/helpers';
+import { AppDispatch, RootState } from '../../store';
+import { deleteAlert, fetchAlertById } from '../../store/alertSlice';
 import { ALERT_TYPE_ICONS, KARACHI_COORDS } from '../../utils/constants';
+import { formatDate, getSeverityColor } from '../../utils/helpers';
 
 const AlertDetailScreen: React.FC = () => {
   const route = useRoute();
@@ -70,7 +70,7 @@ const AlertDetailScreen: React.FC = () => {
         onBackPress={() => navigation.goBack()}
         actions={[
           { icon: 'share-variant', onPress: handleShare },
-          ...(isAdmin ? [{ icon: 'pencil', onPress: () => navigation.navigate('EditAlert' as never, { alertId } as never) }] : []),
+          ...(isAdmin ? [{ icon: 'pencil', onPress: () => (navigation as any).navigate('EditAlert', { alertId }) }] : []),
         ]}
       />
 
@@ -122,21 +122,22 @@ const AlertDetailScreen: React.FC = () => {
             <Card.Content>
               <Text style={styles.sectionTitle}>Location on Map</Text>
               <MapView
-                style={styles.map}
-                initialRegion={{
-                  latitude: currentAlert.latitude,
-                  longitude: currentAlert.longitude,
-                  ...KARACHI_COORDS,
-                }}
-              >
-                <Marker
-                  coordinate={{
-                    latitude: currentAlert.latitude,
-                    longitude: currentAlert.longitude,
-                  }}
-                  title={currentAlert.title}
-                />
-              </MapView>
+                    style={styles.map}
+                    initialRegion={{
+                      // Use KARACHI_COORDS as defaults, override with alert coords if present
+                      ...KARACHI_COORDS,
+                      latitude: currentAlert.latitude ?? KARACHI_COORDS.latitude,
+                      longitude: currentAlert.longitude ?? KARACHI_COORDS.longitude,
+                    }}
+                  >
+                    <Marker
+                      coordinate={{
+                        latitude: currentAlert.latitude ?? KARACHI_COORDS.latitude,
+                        longitude: currentAlert.longitude ?? KARACHI_COORDS.longitude,
+                      }}
+                      title={currentAlert.title}
+                    />
+                  </MapView>
             </Card.Content>
           </Card>
         )}

@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import { Snackbar } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Snackbar } from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import Button from '../../components/Button';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
-import Button from '../../components/Button';
-import { createAlert } from '../../store/alertSlice';
 import { AppDispatch } from '../../store';
-import { AlertType, SeverityLevel, CreateAlertRequest } from '../../types';
+import { createAlert } from '../../store/alertSlice';
+import { AlertType, CreateAlertRequest, SeverityLevel } from '../../types';
 
 const CreateAlertScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -89,7 +89,7 @@ const CreateAlertScreen: React.FC = () => {
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={type}
-            onValueChange={(value) => setType(value)}
+            onValueChange={(value: any) => setType(value as any)}
           >
             <Picker.Item label="Heatwave" value="Heatwave" />
             <Picker.Item label="Thunderstorm" value="Thunderstorm" />
@@ -103,7 +103,7 @@ const CreateAlertScreen: React.FC = () => {
         <View style={styles.pickerContainer}>
           <Picker
             selectedValue={severity}
-            onValueChange={(value) => setSeverity(value)}
+            onValueChange={(value: any) => setSeverity(value as any)}
           >
             <Picker.Item label="Low" value="Low" />
             <Picker.Item label="Medium" value="Medium" />
@@ -129,7 +129,7 @@ const CreateAlertScreen: React.FC = () => {
           <DateTimePicker
             value={startDate}
             mode="date"
-            onChange={(event, date) => {
+            onChange={(event: any, date?: Date) => {
               setShowStartPicker(false);
               if (date) setStartDate(date);
             }}
@@ -140,7 +140,7 @@ const CreateAlertScreen: React.FC = () => {
           <DateTimePicker
             value={endDate}
             mode="date"
-            onChange={(event, date) => {
+            onChange={(event: any, date?: Date) => {
               setShowEndPicker(false);
               if (date) setEndDate(date);
             }}

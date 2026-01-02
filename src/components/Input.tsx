@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextInput } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
 interface InputProps {
   label: string;
@@ -57,4 +57,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Input;
+type InputComponentType = React.FC<InputProps> & { Icon: typeof TextInput.Icon };
+const InputComponent = Input as InputComponentType;
+InputComponent.Icon = TextInput.Icon;
+
+export default InputComponent;

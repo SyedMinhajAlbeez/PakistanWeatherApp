@@ -1,7 +1,7 @@
-import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import { Platform } from 'react-native';
+import * as Notifications from 'expo-notifications';
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 import { STORAGE_KEYS } from '../utils/constants';
 
 export async function registerForPushNotificationsAsync() {

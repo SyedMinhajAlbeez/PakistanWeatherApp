@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, RefreshControl } from 'react-native';
-import { Text, Card, Chip } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Header from '../../components/Header';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import { Card, Chip, Text } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import AlertCard from '../../components/AlertCard';
+import Header from '../../components/Header';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { fetchAlerts } from '../../store/alertSlice';
 import { alertService } from '../../services/alertService';
-import { RootState, AppDispatch } from '../../store';
+import { AppDispatch, RootState } from '../../store';
+import { fetchAlerts } from '../../store/alertSlice';
 import { CurrentWeather } from '../../types';
 
 const HomeScreen: React.FC = () => {
@@ -109,10 +109,10 @@ const HomeScreen: React.FC = () => {
                 <AlertCard
                   key={alert.id}
                   alert={alert}
-                  onPress={() => navigation.navigate('Alerts' as never, {
-                    screen: 'AlertDetail',
-                    params: { alertId: alert.id }
-                  } as never)}
+                  onPress={() => (navigation as any).navigate('Alerts', {
+                      screen: 'AlertDetail',
+                      params: { alertId: alert.id }
+                    })}
                 />
               ))
             )}

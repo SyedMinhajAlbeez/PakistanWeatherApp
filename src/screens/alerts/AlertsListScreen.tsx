@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
-import { FAB, Searchbar, Menu, Button as PaperButton, Chip } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import Header from '../../components/Header';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { Chip, FAB, Menu, Searchbar } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import AlertCard from '../../components/AlertCard';
+import Header from '../../components/Header';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { AppDispatch, RootState } from '../../store';
 import { fetchAlerts } from '../../store/alertSlice';
-import { RootState, AppDispatch } from '../../store';
-import { SeverityLevel, AlertType } from '../../types';
+import { SeverityLevel } from '../../types';
 
 const AlertsListScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -75,7 +75,7 @@ const AlertsListScreen: React.FC = () => {
         renderItem={({ item }) => (
           <AlertCard
             alert={item}
-            onPress={() => navigation.navigate('AlertDetail' as never, { alertId: item.id } as never)}
+            onPress={() => (navigation as any).navigate('AlertDetail', { alertId: item.id })}
           />
         )}
         contentContainerStyle={styles.list}

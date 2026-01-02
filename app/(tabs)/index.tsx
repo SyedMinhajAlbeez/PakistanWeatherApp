@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
+// NavigationContainer is provided by the router; don't nest it here
 import * as Notifications from 'expo-notifications';
-import store from '../src/store';
-import AppNavigator from './src/navigation/AppNavigator';
-import theme from './src/theme';
-import { registerForPushNotificationsAsync } from './src/services/notificationService';
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider } from 'react-redux';
+import AppNavigator from '../../src/navigation/AppNavigator';
+import { registerForPushNotificationsAsync } from '../../src/services/notificationService';
+import store from '../../src/store';
+import theme from '../../src/theme';
 
 // Configure notifications
 Notifications.setNotificationHandler({
@@ -15,6 +15,9 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
+    // Newer versions expect these fields as well
+    shouldShowBanner: true,
+    shouldShowList: true,
   }),
 });
 
@@ -44,10 +47,8 @@ export default function App() {
   return (
     <Provider store={store}>
       <PaperProvider theme={theme}>
-        <NavigationContainer>
-          <StatusBar style="auto" />
-          <AppNavigator />
-        </NavigationContainer>
+        <StatusBar style="auto" />
+        <AppNavigator />
       </PaperProvider>
     </Provider>
   );
